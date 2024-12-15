@@ -5,7 +5,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 # function to generate password
-def generate_password(length, use_uppercase, use_digits, use_special_chars):
+def generate_password(length, use_uppercase, use_digits, use_special_chars, special_chars):
     characters = string.ascii_lowercase  
     
     if use_uppercase:
@@ -17,12 +17,13 @@ def generate_password(length, use_uppercase, use_digits, use_special_chars):
     
     return ''.join(random.choice(characters) for _ in range(length))
 
-# home page
+
 @app.route("/", methods=["GET", "POST"])
 def index():
-    password = ""
+    password = []
     
     if request.method == "POST":
+        #get this from data
         length = int(request.form["length"])
         use_uppercase = "uppercase" in request.form
         use_digits = "digits" in request.form
