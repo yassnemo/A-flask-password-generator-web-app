@@ -5,25 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Generator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        // Function to load settings from localStorage
+        function loadSettings() {
+            const length = localStorage.getItem('length') || 12;
+            const numPasswords = localStorage.getItem('numPasswords') || 5;
+            const uppercase = localStorage.getItem('uppercase') === 'true';
+            const digits = localStorage.getItem('digits') === 'true';
+            const specialChars = localStorage.getItem('specialChars') === 'true';
+
+            document.getElementById('length').value = length;
+            document.getElementById('num_passwords').value = numPasswords;
+            document.getElementById('uppercase').checked = uppercase;
+            document.getElementById('digits').checked = digits;
+            document.getElementById('special_chars').checked = specialChars;
+        }
+
+        // Function to save settings to localStorage
+        function saveSettings() {
+            const length = document.getElementById('length').value;
+            const numPasswords = document.getElementById('num_passwords').value;
+            const uppercase = document.getElementById('uppercase').checked;
+            const digits = document.getElementById('digits').checked;
+            const specialChars = document.getElementById('special_chars').checked;
+
+            localStorage.setItem('length', length);
+            localStorage.setItem('numPasswords', numPasswords);
+            localStorage.setItem('uppercase', uppercase);
+            localStorage.setItem('digits', digits);
+            localStorage.setItem('specialChars', specialChars);
+        }
+
+        // Run loadSettings on page load
+        window.onload = loadSettings;
+    </script>
 </head>
 <body>
     <h1>Password Generator</h1>
 
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul class="flashes">
-          {% for message in messages %}
-            <li>{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% endwith %}
 
-    <form method="POST">
+    <form method="POST" onsubmit="saveSettings()">
         <div class="form-group">
-            <label for="length">Password Length:</label>
-            <input type="number" id="length" name="length" value="12" min="4" required>
+            <label for="length">Password Length (max 40):</label>
+            <input type="number" id="length" name="length" value="12" min="4" max="40" required>
         </div>
 
         <div class="form-group">
@@ -32,17 +66,17 @@
         </div>
 
         <div class="form-group checkbox-group">
-            <label for="uppercase">Include Uppercase Letters:</label>
+            <span>Include Uppercase Letters:</span>
             <input type="checkbox" id="uppercase" name="uppercase">
         </div>
 
         <div class="form-group checkbox-group">
-            <label for="digits">Include Digits:</label>
+            <span>Include Digits:</span>
             <input type="checkbox" id="digits" name="digits">
         </div>
 
         <div class="form-group checkbox-group">
-            <label for="special_chars">Include Special Characters:</label>
+            <span>Include Special Characters:</span>
             <input type="checkbox" id="special_chars" name="special_chars">
         </div>
 
@@ -51,7 +85,7 @@
 
     {% if passwords %}
         <h3>Your Generated Passwords:</h3>
-        <table>
+        <table class="passwords-table">
             <thead>
                 <tr>
                     <th>#</th>
@@ -60,10 +94,10 @@
             </thead>
             <tbody>
                 {% for i in range(passwords|length) %}
-                    <tr>
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ passwords[i] }}</td>
-                    </tr>
+                <tr>
+                    <td>{{ i + 1 }}</td>  <!-- Starting index from 1 -->
+                    <td>{{ passwords[i] }}</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>

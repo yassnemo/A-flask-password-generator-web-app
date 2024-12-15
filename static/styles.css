@@ -1,4 +1,4 @@
-/* General Styles */
+/* General styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
@@ -9,7 +9,7 @@ body {
 
 h1 {
     text-align: center;
-    color: #4CAF50;
+    color: #4CAF50; /* Green color for the title */
 }
 
 /* Flash messages styling */
@@ -30,7 +30,7 @@ h1 {
     text-align: center;
 }
 
-/* Form styling */
+/* Form styles */
 form {
     background-color: #fff;
     padding: 20px;
@@ -61,14 +61,13 @@ form {
 
 .checkbox-group {
     display: flex;
-    justify-content: space-between;  /* Keeps the text left and the checkbox to the right */
     align-items: center;
+    justify-content: space-between;
 }
 
 .checkbox-group span {
     flex: 1;
     font-size: 1rem;
-    text-align: left;  /* Align text to the left */
 }
 
 .checkbox-group input[type="checkbox"] {
@@ -76,7 +75,12 @@ form {
     height: 20px;
 }
 
-/* Buttons */
+label {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
 input[type="number"], input[type="checkbox"], button {
     margin-bottom: 15px;
 }
@@ -94,7 +98,7 @@ input[type="checkbox"] {
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: #4CAF50; /* Green color for button */
     color: white;
     border: none;
     cursor: pointer;
@@ -107,10 +111,34 @@ button:hover {
     background-color: #45a049;
 }
 
-/* Password Table */
+/* Styling for the table displaying passwords */
 h3 {
     color: #333;
     text-align: center;
+}
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    table-layout: fixed;
+    max-width: 600px; /* Set a max-width for the table */
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50; /* Green color for table headers */
+    color: white;
+}
+
+td {
+    font-size: 1.1rem;
+    color: #333; /* Default color for password text */
 }
 
 ul {
@@ -122,27 +150,4 @@ li {
     font-size: 1.2rem;
     color: #4CAF50;
     text-align: center;
-}
-
-/* Table for generated passwords */
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    text-align: left;
-}
-
-th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-th {
-    background-color: #4CAF50;
-    color: white;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
 }
