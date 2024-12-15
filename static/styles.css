@@ -64,9 +64,13 @@ h3 {
     text-align: center;
 }
 
-p {
-    text-align: center;
-    font-weight: bold;
-    color: #4CAF50;
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
     font-size: 1.2rem;
+    color: #4CAF50;
+    text-align: center;
 }
