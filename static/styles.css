@@ -169,3 +169,58 @@ li {
     color: #4CAF50;
     text-align: center;
 }
+
+/* Style for the buttons container */
+.buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;  /* Center the buttons */
+}
+
+/* Style for each button */
+#generateV1Btn, #generateV2Btn {
+    background-color: #4CAF50;  /* Green color */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;  /* Smaller font size */
+    border-radius: 5px;  /* Slightly rounded corners */
+    padding: 6px 10px;  /* Smaller padding for a more compact button */
+    font-weight: bold;  /* Make the text bold */
+    text-transform: uppercase;  /* Make the text uppercase */
+    transition: background-color 0.3s ease;
+    width: auto;  /* Allow the button to adjust width based on content */
+}
+
+/* Hover effect for the buttons */
+#generateV1Btn:hover, #generateV2Btn:hover {
+    background-color: #45a049;  /* Slightly darker green */
+}
+
+/* Additional table styling for the layout consistency */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: center;
+}
+
+table th {
+    background-color: #4CAF50; /* Green header */
+    color: white;
+}
+
+table td {
+    background-color: white;
+}
+
+table tr:nth-child(even) td {
+    background-color: #f2f2f2;
+}

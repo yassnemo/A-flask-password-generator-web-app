@@ -5,64 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Generator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script>
-        // Function to load settings from localStorage
-        function loadSettings() {
-            const length = localStorage.getItem('length') || 12;
-            const numPasswords = localStorage.getItem('numPasswords') || 5;
-            const uppercase = localStorage.getItem('uppercase') === 'true';
-            const digits = localStorage.getItem('digits') === 'true';
-            const specialChars = localStorage.getItem('specialChars') === 'true';
-
-            document.getElementById('length').value = length;
-            document.getElementById('num_passwords').value = numPasswords;
-            document.getElementById('uppercase').checked = uppercase;
-            document.getElementById('digits').checked = digits;
-            document.getElementById('special_chars').checked = specialChars;
-        }
-
-        // Function to save settings to localStorage
-        function saveSettings() {
-            const length = document.getElementById('length').value;
-            const numPasswords = document.getElementById('num_passwords').value;
-            const uppercase = document.getElementById('uppercase').checked;
-            const digits = document.getElementById('digits').checked;
-            const specialChars = document.getElementById('special_chars').checked;
-
-            localStorage.setItem('length', length);
-            localStorage.setItem('numPasswords', numPasswords);
-            localStorage.setItem('uppercase', uppercase);
-            localStorage.setItem('digits', digits);
-            localStorage.setItem('specialChars', specialChars);
-        }
-
-        // Run loadSettings on page load
-        window.onload = loadSettings;
-    </script>
 </head>
 <body>
     <h1>Password Generator</h1>
 
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flashes">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
     {% endwith %}
 
-    <form method="POST" onsubmit="saveSettings()">
+    <form method="POST">
         <div class="form-group">
-            <label for="length">Password Length (max 40):</label>
-            <input type="number" id="length" name="length" value="12" min="4" max="40" required>
+            <label for="length">Password Length:</label>
+            <input type="number" id="length" name="length" value="12" min="4" required>
         </div>
 
         <div class="form-group">
             <label for="num_passwords">Number of Passwords:</label>
-            <input type="number" id="num_passwords" name="num_passwords" value="5" min="1" max="30" required>
+            <input type="number" id="num_passwords" name="num_passwords" value="5" min="1" required>
         </div>
 
         <div class="form-group checkbox-group">
@@ -83,9 +49,15 @@
         <button type="submit">Generate Passwords</button>
     </form>
 
+    <!-- New Buttons -->
+    <div class="buttons">
+        <button id="generateV1Btn">Pass(V1)</button>
+        <button id="generateV2Btn">Pass(V2)</button>
+    </div>
+    
     {% if passwords %}
         <h3>Your Generated Passwords:</h3>
-        <table class="passwords-table">
+        <table>
             <thead>
                 <tr>
                     <th>#</th>
@@ -93,14 +65,73 @@
                 </tr>
             </thead>
             <tbody>
-                {% for i in range(passwords|length) %}
-                <tr>
-                    <td>{{ i + 1 }}</td>  <!-- Starting index from 1 -->
-                    <td>{{ passwords[i] }}</td>
-                </tr>
+                {% for password in passwords %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ password }}</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% endif %}
+
+    <script>
+        // When the "Generate Pass(V1)" button is clicked
+        document.getElementById("generateV1Btn").addEventListener("click", function() {
+            generatePasswords('V1');
+        });
+
+        // When the "Generate Pass(V2)" button is clicked
+        document.getElementById("generateV2Btn").addEventListener("click", function() {
+            generatePasswords('V2');
+        });
+
+        // General function to generate passwords based on version
+        function generatePasswords(version) {
+            const length = document.getElementById("length").value;
+            const numPasswords = document.getElementById("num_passwords").value;
+            const useUppercase = document.getElementById("uppercase").checked;
+            const useDigits = document.getElementById("digits").checked;
+            const useSpecialChars = document.getElementById("special_chars").checked;
+
+            // AJAX request to generate new passwords
+            const formData = new FormData();
+            formData.append("length", length);
+            formData.append("num_passwords", numPasswords);
+            formData.append("uppercase", useUppercase);
+            formData.append("digits", useDigits);
+            formData.append("special_chars", useSpecialChars);
+
+            fetch("/generate_passwords", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);  // Show error if any
+                } else {
+                    // Clear existing passwords and append new ones
+                    const tableBody = document.querySelector("table tbody");
+                    tableBody.innerHTML = "";  // Clear existing rows
+
+                    data.passwords.forEach((password, index) => {
+                        const row = document.createElement("tr");
+
+                        const numberCell = document.createElement("td");
+                        numberCell.textContent = index + 1;
+                        row.appendChild(numberCell);
+
+                        const passwordCell = document.createElement("td");
+                        passwordCell.textContent = password;
+                        row.appendChild(passwordCell);
+
+                        tableBody.appendChild(row);
+                    });
+                }
+            })
+            .catch(error => alert("Error: " + error));
+        }
+    </script>
 </body>
 </html>
