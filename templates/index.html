@@ -26,12 +26,12 @@
     <form method="POST">
         <div class="form-group">
             <label for="length">Password Length:</label>
-            <input type="number" id="length" name="length" value="12" min="4" required placeholder="Enter password length" aria-label="Password Length">
+            <input type="number" id="length" name="length" value="12" min="4" max="50" required placeholder="Enter password length" aria-label="Password Length" aria-describedby="lengthHelp">
         </div>
 
         <div class="form-group">
             <label for="num_passwords">Number of Passwords:</label>
-            <input type="number" id="num_passwords" name="num_passwords" value="5" min="1" required placeholder="Enter number of passwords" aria-label="Number of Passwords">
+            <input type="number" id="num_passwords" name="num_passwords" value="5" min="1" max="10" required placeholder="Enter number of passwords" aria-label="Number of Passwords" aria-describedby="numPasswordsHelp">
         </div>
 
         <div class="form-group checkbox-group">
@@ -67,10 +67,16 @@
             </thead>
             <tbody>
                 {% for password in passwords %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td class="password-cell">{{ password }}</td>
-                    </tr>
+                    {% if password.error %}
+                        <tr>
+                            <td colspan="2" class="error-message">{{ password.error }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td class="password-cell">{{ password }}</td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
             </tbody>
         </table>
@@ -113,7 +119,12 @@
                 method: "POST",
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => { throw errData; });
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.error) {
                     alert(data.error);
@@ -137,7 +148,13 @@
                     });
                 }
             })
-            .catch(error => alert("Error: " + error));
+            .catch(error => {
+                if (error.error) {
+                    alert(error.error);
+                } else {
+                    alert("An unexpected error occurred.");
+                }
+            });
         }
     </script>
 </body>

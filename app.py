@@ -50,8 +50,12 @@ def index():
             # Validate input
             if length < 4:
                 raise ValueError("Password length must be at least 4.")
+            if length > 50:
+                raise ValueError("Password length must be at most 50.")
             if num_passwords < 1:
                 raise ValueError("You must generate at least one password.")
+            if num_passwords > 10:
+                raise ValueError("You cannot generate more than 10 passwords.")
             if not (use_uppercase or use_digits or use_special_chars):
                 raise ValueError("At least one character type must be selected.")
 
@@ -81,8 +85,12 @@ def generate_passwords_route():
         # Validate input
         if length < 4:
             raise ValueError("Password length must be at least 4.")
+        if length > 50:
+            raise ValueError("Password length must be at most 50.")
         if num_passwords < 1:
             raise ValueError("You must generate at least one password.")
+        if num_passwords > 10:
+            raise ValueError("You cannot generate more than 10 passwords.")
         if not (use_uppercase or use_digits or use_special_chars):
             raise ValueError("At least one character type must be selected.")
 
