@@ -46,7 +46,6 @@
             <input type="checkbox" id="special_chars" name="special_chars">
         </div>
 
-        <button type="submit">Generate Passwords</button>
     </form>
 
     <!-- New Buttons -->
@@ -68,7 +67,7 @@
                 {% for password in passwords %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td>{{ password }}</td>
+                        <td class="password-cell">{{ password }}</td>  <!-- Add the password-cell class here -->
                     </tr>
                 {% endfor %}
             </tbody>
@@ -124,6 +123,7 @@
 
                         const passwordCell = document.createElement("td");
                         passwordCell.textContent = password;
+                        passwordCell.classList.add('password-cell'); // Add the password-cell class here
                         row.appendChild(passwordCell);
 
                         tableBody.appendChild(row);
