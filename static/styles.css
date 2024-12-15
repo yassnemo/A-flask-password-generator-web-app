@@ -1,114 +1,148 @@
-/* styles.css */
-
-/* General Body Styling */
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     color: #333;
     margin: 0;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100vh;
 }
 
-/* Header */
 h1 {
-    color: #007bff;
-    font-size: 32px;
-    margin-bottom: 20px;
+    text-align: center;
+    color: #4CAF50;
 }
 
-/* Form Styling */
-form {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-    margin-bottom: 40px;
-}
-
-/* Form Elements */
-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-}
-
-input[type="number"], input[type="checkbox"] {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0 20px 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-/* Flash Messages */
+/* Flash messages styling */
 .flashes {
-    color: red;
-    font-weight: bold;
-    margin-bottom: 20px;
+    list-style-type: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 450px;
+}
+
+.flashes li {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
-/* Table Styling */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+/* Form styling */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-table, th, td {
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="number"],
+.form-group input[type="text"] {
+    padding: 8px;
+    width: 100%;
+    font-size: 1rem;
     border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.checkbox-group {
+    display: flex;
+    justify-content: space-between;  /* Keeps the text left and the checkbox to the right */
+    align-items: center;
+}
+
+.checkbox-group span {
+    flex: 1;
+    font-size: 1rem;
+    text-align: left;  /* Align text to the left */
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+/* Buttons */
+input[type="number"], input[type="checkbox"], button {
+    margin-bottom: 15px;
+}
+
+input[type="number"], button {
+    padding: 8px;
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Password Table */
+h3 {
+    color: #333;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    font-size: 1.2rem;
+    color: #4CAF50;
+    text-align: center;
+}
+
+/* Table for generated passwords */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    text-align: left;
 }
 
 th, td {
     padding: 10px;
-    text-align: left;
-    font-family: Arial, sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
     background-color: #f2f2f2;
-}
-
-td {
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    color: #007bff;
-}
-
-/* Table Styling for Responsiveness */
-@media (max-width: 600px) {
-    table {
-        font-size: 14px;
-    }
-
-    th, td {
-        padding: 8px;
-    }
-
-    button {
-        font-size: 14px;
-    }
 }
