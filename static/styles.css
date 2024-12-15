@@ -123,6 +123,9 @@ table {
     border-collapse: collapse;
     table-layout: fixed;
     max-width: 600px; /* Set a max-width for the table */
+    background-color: white; /* Set the background color of the table to white */
+    border-radius: 8px; /* Rounded edges for the table */
+    overflow: hidden; /* Ensures the rounded corners work properly */
 }
 
 th, td {
@@ -139,6 +142,21 @@ th {
 td {
     font-size: 1.1rem;
     color: #333; /* Default color for password text */
+}
+
+/* Column widths */
+th:nth-child(1), td:nth-child(1) {
+    width: 10%; /* Smaller width for the "Number" column */
+    text-align: center; /* Center the text in the Number column */
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 90%; /* Larger width for the "Password" column */
+}
+
+/* Ensures the table rows have a white background */
+table tr {
+    background-color: white;
 }
 
 ul {
