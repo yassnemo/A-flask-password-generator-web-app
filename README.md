@@ -19,7 +19,7 @@ A simple and lightweight password generator web app built using the **Flask** fr
 
 ## Requirements
 
-Before you start, ensure you have the following installed on your machine:
+Before you start, ensure you have the following installed on your system:
 
 - Python
   
@@ -27,7 +27,7 @@ Before you start, ensure you have the following installed on your machine:
 
 ## Installation
 
-1. Clone the repository to your local machine:
+1. Clone the repository to your local directory:
 
    ```bash
    git clone https://github.com/yassnemo/A-flask-password-generator-web-app.git
