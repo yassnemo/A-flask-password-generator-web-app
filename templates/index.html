@@ -23,27 +23,27 @@
     <form method="POST">
         <div class="form-group">
             <label for="length">Password Length:</label>
-            <input type="number" id="length" name="length" value="12" min="4" required>
+            <input type="number" id="length" name="length" value="{{ settings['length'] }}" min="4" required>
         </div>
 
         <div class="form-group">
             <label for="num_passwords">Number of Passwords:</label>
-            <input type="number" id="num_passwords" name="num_passwords" value="5" min="1" required>
+            <input type="number" id="num_passwords" name="num_passwords" value="{{ settings['num_passwords'] }}" min="1" required>
         </div>
 
         <div class="form-group checkbox-group">
             <span>Include Uppercase Letters:</span>
-            <input type="checkbox" id="uppercase" name="uppercase">
+            <input type="checkbox" id="uppercase" name="uppercase" {% if settings['uppercase'] %}checked{% endif %}>
         </div>
 
         <div class="form-group checkbox-group">
             <span>Include Digits:</span>
-            <input type="checkbox" id="digits" name="digits">
+            <input type="checkbox" id="digits" name="digits" {% if settings['digits'] %}checked{% endif %}>
         </div>
 
         <div class="form-group checkbox-group">
             <span>Include Special Characters:</span>
-            <input type="checkbox" id="special_chars" name="special_chars">
+            <input type="checkbox" id="special_chars" name="special_chars" {% if settings['special_chars'] %}checked{% endif %}>
         </div>
 
         <div class="form-group">
