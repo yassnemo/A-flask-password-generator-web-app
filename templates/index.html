@@ -23,32 +23,27 @@
     <form method="POST">
         <div class="form-group">
             <label for="length">Password Length:</label>
-            <input type="number" id="length" name="length" value="{{ settings['length'] }}" min="4" required>
+            <input type="number" id="length" name="length" value="12" min="4" required>
         </div>
 
         <div class="form-group">
             <label for="num_passwords">Number of Passwords:</label>
-            <input type="number" id="num_passwords" name="num_passwords" value="{{ settings['num_passwords'] }}" min="1" required>
+            <input type="number" id="num_passwords" name="num_passwords" value="5" min="1" max="30" required>
         </div>
 
         <div class="form-group checkbox-group">
-            <span>Include Lowercase Letters:</span>
-            <input type="checkbox" id="lowercase" name="lowercase" {% if settings['lowercase'] %} checked {% endif %}>
+            <label for="uppercase">Include Uppercase Letters:</label>
+            <input type="checkbox" id="uppercase" name="uppercase">
         </div>
 
         <div class="form-group checkbox-group">
-            <span>Include Uppercase Letters:</span>
-            <input type="checkbox" id="uppercase" name="uppercase" {% if settings['uppercase'] %} checked {% endif %}>
+            <label for="digits">Include Digits:</label>
+            <input type="checkbox" id="digits" name="digits">
         </div>
 
         <div class="form-group checkbox-group">
-            <span>Include Digits:</span>
-            <input type="checkbox" id="digits" name="digits" {% if settings['digits'] %} checked {% endif %}>
-        </div>
-
-        <div class="form-group checkbox-group">
-            <span>Include Special Characters:</span>
-            <input type="checkbox" id="special_chars" name="special_chars" {% if settings['special_chars'] %} checked {% endif %}>
+            <label for="special_chars">Include Special Characters:</label>
+            <input type="checkbox" id="special_chars" name="special_chars">
         </div>
 
         <button type="submit">Generate Passwords</button>
@@ -56,11 +51,22 @@
 
     {% if passwords %}
         <h3>Your Generated Passwords:</h3>
-        <ul>
-            {% for password in passwords %}
-                <li>{{ password }}</li>
-            {% endfor %}
-        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Password</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(passwords|length) %}
+                    <tr>
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ passwords[i] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 </body>
 </html>
