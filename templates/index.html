@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> YPass </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Password Generator</h1>
+    
+    <form method="POST">
+        <label for="length">Password Length:</label>
+        <input type="number" id="length" name="length" value="12" min="4" required>
+        <br><br>
+        
+        <label for="uppercase">Include Uppercase Letters:</label>
+        <input type="checkbox" id="uppercase" name="uppercase">
+        <br><br>
+        
+        <label for="digits">Include Digits:</label>
+        <input type="checkbox" id="digits" name="digits">
+        <br><br>
+        
+        <label for="special_chars">Include Special Characters:</label>
+        <input type="checkbox" id="special_chars" name="special_chars">
+        <br><br>
+        
+        <button type="submit">Generate Password</button>
+    </form>
+    
+    {% if password %}
+    <h3>Your Generated Password:</h3>
+    <p>{{ password }}</p>
+    {% endif %}
+    
+</body>
+</html>

@@ -1,0 +1,72 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+input[type="number"], input[type="checkbox"], button {
+    margin-bottom: 15px;
+}
+
+input[type="number"], button {
+    padding: 8px;
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Styling of generated password */
+h3 {
+    color: #333;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+    font-weight: bold;
+    color: #4CAF50;
+    font-size: 1.2rem;
+}
