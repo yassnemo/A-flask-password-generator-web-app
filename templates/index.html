@@ -32,6 +32,11 @@
         </div>
 
         <div class="form-group checkbox-group">
+            <span>Include Lowercase Letters:</span>
+            <input type="checkbox" id="lowercase" name="lowercase" {% if settings['lowercase'] %} checked {% endif %}>
+        </div>
+
+        <div class="form-group checkbox-group">
             <span>Include Uppercase Letters:</span>
             <input type="checkbox" id="uppercase" name="uppercase" {% if settings['uppercase'] %} checked {% endif %}>
         </div>

@@ -7,8 +7,11 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Generates a secure random key
 
 # Function to generate a single password
-def generate_password(length, use_uppercase, use_digits, use_special_chars, special_chars):
-    characters = string.ascii_lowercase  # Always include lowercase characters
+def generate_password(length, use_lowercase, use_uppercase, use_digits, use_special_chars, special_chars):
+    characters = ""
+    
+    if use_lowercase:
+        characters += string.ascii_lowercase
     if use_uppercase:
         characters += string.ascii_uppercase
     if use_digits:
@@ -16,6 +19,10 @@ def generate_password(length, use_uppercase, use_digits, use_special_chars, spec
     if use_special_chars:
         characters += special_chars
 
+    # If no characters selected, default to lowercase letters
+    if not characters:
+        characters = string.ascii_lowercase
+    
     return ''.join(random.choice(characters) for _ in range(length))
 
 @app.route("/", methods=["GET", "POST"])
@@ -24,6 +31,7 @@ def index():
     settings = {
         'length': 12,
         'num_passwords': 5,
+        'lowercase': True,
         'uppercase': False,
         'digits': False,
         'special_chars': False,
@@ -42,6 +50,7 @@ def index():
             # Retrieve form data with default values
             length = int(request.form.get("length", settings['length']))
             num_passwords = int(request.form.get("num_passwords", settings['num_passwords']))
+            use_lowercase = "lowercase" in request.form
             use_uppercase = "uppercase" in request.form
             use_digits = "digits" in request.form
             use_special_chars = "special_chars" in request.form
@@ -55,13 +64,14 @@ def index():
 
             # Generate multiple passwords
             for _ in range(num_passwords):
-                password = generate_password(length, use_uppercase, use_digits, use_special_chars, special_chars)
+                password = generate_password(length, use_lowercase, use_uppercase, use_digits, use_special_chars, special_chars)
                 passwords.append(password)
 
             # Save settings to cookies
             settings = {
                 'length': length,
                 'num_passwords': num_passwords,
+                'lowercase': use_lowercase,
                 'uppercase': use_uppercase,
                 'digits': use_digits,
                 'special_chars': use_special_chars,
