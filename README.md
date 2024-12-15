@@ -55,3 +55,9 @@ Before you start, ensure you have the following installed on your system:
 ## Contributing
 
 Feel free to fork this repository and submit pull requests. Any contributions to improve the app are welcome!
+
+## Creadits
+
+- Background Image: https://pngtree.com/freebackground/grunge-brush-texture-background-contrast_1912063.html
+
+- Favicon: https://www.flaticon.com/free-icon/password_1592485
