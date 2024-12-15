@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, make_response
 import random
 import string
-import os
+import os  # Import os for generating a secure key
+from flask import Flask, render_template, request, flash, redirect, url_for, make_response
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = os.urandom(24)  # Generates a secure random key
 
 # Function to generate a single password
 def generate_password(length, use_uppercase, use_digits, use_special_chars, special_chars):
@@ -15,46 +15,37 @@ def generate_password(length, use_uppercase, use_digits, use_special_chars, spec
         characters += string.digits
     if use_special_chars:
         characters += special_chars
+
     return ''.join(random.choice(characters) for _ in range(length))
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     passwords = []  # Initialize passwords as an empty list
-
-    # Default settings
-    default_settings = {
-        "length": 12,
-        "num_passwords": 5,
-        "uppercase": False,
-        "digits": False,
-        "special_chars": False,
-        "special_chars_set": string.punctuation
+    settings = {
+        'length': 12,
+        'num_passwords': 5,
+        'uppercase': False,
+        'digits': False,
+        'special_chars': False,
+        'special_chars_set': string.punctuation
     }
 
-    # Retrieve settings from cookies (if available)
-    if request.cookies.get("password_settings"):
-        stored_settings = request.cookies.get("password_settings")
-        stored_settings = stored_settings.split('|')  # Split settings based on separator
-
-        # Convert string values to appropriate types
-        default_settings = {
-            "length": int(stored_settings[0]),
-            "num_passwords": int(stored_settings[1]),
-            "uppercase": bool(int(stored_settings[2])),
-            "digits": bool(int(stored_settings[3])),
-            "special_chars": bool(int(stored_settings[4])),
-            "special_chars_set": stored_settings[5] if stored_settings[5] != "None" else string.punctuation
-        }
+    # Load settings from cookies if available
+    try:
+        if 'settings' in request.cookies:
+            settings = eval(request.cookies.get('settings'))  # Be cautious with eval - use this only if you trust the source
+    except Exception as e:
+        flash(f"Error loading settings: {e}")
 
     if request.method == "POST":
         try:
             # Retrieve form data with default values
-            length = int(request.form.get("length", default_settings["length"]))
-            num_passwords = int(request.form.get("num_passwords", default_settings["num_passwords"]))
+            length = int(request.form.get("length", settings['length']))
+            num_passwords = int(request.form.get("num_passwords", settings['num_passwords']))
             use_uppercase = "uppercase" in request.form
             use_digits = "digits" in request.form
             use_special_chars = "special_chars" in request.form
-            special_chars = request.form.get("special_chars_set", string.punctuation) if use_special_chars else string.punctuation
+            special_chars = request.form.get("special_chars_set", settings['special_chars_set']) if use_special_chars else settings['special_chars_set']
 
             # Input validation
             if length < 4:
@@ -67,20 +58,30 @@ def index():
                 password = generate_password(length, use_uppercase, use_digits, use_special_chars, special_chars)
                 passwords.append(password)
 
-            # Store settings in a cookie
-            settings = "|".join([str(length), str(num_passwords), str(int(use_uppercase)), str(int(use_digits)), str(int(use_special_chars)), special_chars if special_chars != string.punctuation else "None"])
-            resp = make_response(render_template("index.html", passwords=passwords))
-            resp.set_cookie("password_settings", settings, max_age=30 * 24 * 60 * 60)  # Cookie expires after 30 days
+            # Save settings to cookies
+            settings = {
+                'length': length,
+                'num_passwords': num_passwords,
+                'uppercase': use_uppercase,
+                'digits': use_digits,
+                'special_chars': use_special_chars,
+                'special_chars_set': special_chars
+            }
+
+            resp = make_response(render_template("index.html", passwords=passwords, settings=settings))
+            resp.set_cookie('settings', str(settings), max_age=60*60*24*365)  # Cookie expires in 1 year
             return resp
 
         except ValueError as ve:
+            # Flash error message and redirect
             flash(str(ve))
             return redirect(url_for('index'))
         except Exception as e:
+            # Flash unexpected error message and redirect
             flash("An unexpected error occurred.")
             return redirect(url_for('index'))
 
-    return render_template("index.html", passwords=passwords, settings=default_settings)
+    return render_template("index.html", passwords=passwords, settings=settings)
 
 if __name__ == "__main__":
     app.run(debug=True)
