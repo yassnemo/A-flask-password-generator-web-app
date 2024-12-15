@@ -25,14 +25,18 @@ def index():
     if request.method == "POST":
         #get this from data
         length = int(request.form["length"])
+        num_passwords = int(request.form["num_passwords"])
         use_uppercase = "uppercase" in request.form
         use_digits = "digits" in request.form
         use_special_chars = "special_chars" in request.form
+        special_chars = request.form["special_chars_set"] if use_special_chars else string.punctuation
         
-        # Generate the password
-        password = generate_password(length, use_uppercase, use_digits, use_special_chars)
+        # generate multi passwords
+        for _ in range(num_passwords):
+            password = generate_password(length, use_uppercase, use_digits, use_special_chars, special_chars)
+            passwords.append(password)
     
-    return render_template("index.html", password=password)
+    return render_template("index.html", passwords=passwords)
 
 if __name__ == "__main__":
     app.run(debug=True)
