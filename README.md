@@ -8,6 +8,11 @@ A simple and lightweight password generator web app built using the **Flask** fr
 - **Instant Password Generation**: Get a random, secure password with a single click.
 - **User-Friendly Interface**: A simple and intuitive web interface for easy use.
 - **No Registration Needed**: The app works directly in your browser without the need for an account or sign-in.
+  
+![Screenshot 2024-12-15 215745](https://github.com/user-attachments/assets/121d4ce3-2633-43a8-bcef-5d202a1c6c31)
+
+![Screenshot 2024-12-15 215822](https://github.com/user-attachments/assets/9b4aeeb3-9f74-4eca-83d4-d1ceed19fbfd)
+
 
 ## Requirements
 
