@@ -33,22 +33,17 @@
 
         <div class="form-group checkbox-group">
             <span>Include Uppercase Letters:</span>
-            <input type="checkbox" id="uppercase" name="uppercase" {% if settings['uppercase'] %}checked{% endif %}>
+            <input type="checkbox" id="uppercase" name="uppercase" {% if settings['uppercase'] %} checked {% endif %}>
         </div>
 
         <div class="form-group checkbox-group">
             <span>Include Digits:</span>
-            <input type="checkbox" id="digits" name="digits" {% if settings['digits'] %}checked{% endif %}>
+            <input type="checkbox" id="digits" name="digits" {% if settings['digits'] %} checked {% endif %}>
         </div>
 
         <div class="form-group checkbox-group">
             <span>Include Special Characters:</span>
-            <input type="checkbox" id="special_chars" name="special_chars" {% if settings['special_chars'] %}checked{% endif %}>
-        </div>
-
-        <div class="form-group">
-            <label for="special_chars_set">Custom Special Characters (Optional):</label>
-            <input type="text" id="special_chars_set" name="special_chars_set" placeholder='e.g., !"#$%&amp;&#39;()*+,-./:;&lt;&gt;?@[]^_`{|}~'>
+            <input type="checkbox" id="special_chars" name="special_chars" {% if settings['special_chars'] %} checked {% endif %}>
         </div>
 
         <button type="submit">Generate Passwords</button>

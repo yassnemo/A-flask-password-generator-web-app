@@ -45,7 +45,7 @@ def index():
             use_uppercase = "uppercase" in request.form
             use_digits = "digits" in request.form
             use_special_chars = "special_chars" in request.form
-            special_chars = request.form.get("special_chars_set", settings['special_chars_set']) if use_special_chars else settings['special_chars_set']
+            special_chars = string.punctuation if use_special_chars else settings['special_chars_set']
 
             # Input validation
             if length < 4:
