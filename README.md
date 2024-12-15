@@ -5,8 +5,11 @@ A simple and lightweight password generator web app built using the **Flask** fr
 ## Features
 
 - **Customizable Passwords**: Select the password length and character types (uppercase, lowercase, numbers, special characters).
+  
 - **Instant Password Generation**: Get a random, secure password with a single click.
+  
 - **User-Friendly Interface**: A simple and intuitive web interface for easy use.
+  
 - **No Registration Needed**: The app works directly in your browser without the need for an account or sign-in.
   
 ![Screenshot 2024-12-15 215745](https://github.com/user-attachments/assets/121d4ce3-2633-43a8-bcef-5d202a1c6c31)
@@ -18,7 +21,8 @@ A simple and lightweight password generator web app built using the **Flask** fr
 
 Before you start, ensure you have the following installed on your machine:
 
-- Python 3.x
+- Python
+  
 - Flask
 
 ## Installation
