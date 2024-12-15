@@ -40,6 +40,41 @@ form {
     margin: 0 auto;
 }
 
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="number"],
+.form-group input[type="text"] {
+    padding: 8px;
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.checkbox-group span {
+    flex: 1;
+    font-size: 1rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
 label {
     font-size: 1rem;
     margin-bottom: 8px;
