@@ -1,64 +1,147 @@
-/* General styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+/* CSS Reset for Consistency Across Browsers */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Root Variables for Easy Theme Management */
+:root {
+    /* Primary Colors */
+    --primary-text: #FFFFFF; /* White */
+    --secondary-text: #F0F0F0; /* Light Gray */
+    --accent-color: #FCDC94; /* Gold */
+    --button-hover: #FCDC94; /* Darker Gold */
+    
+    /* Background Colors */
+    --content-background: rgba(0, 0, 0, 0.6); /* Semi-transparent Black */
+    --flash-background: rgba(255, 0, 0, 0.8); /* Semi-transparent Red */
+    
+    /* Table Colors */
+    --table-header: #FCDC94; /* Gold */
+    --table-row-even: rgba(255, 255, 255, 0.1); /* Very Dark Gray */
+}
+
+/* Ensure HTML and Body Take Full Height */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+body {
+    position: relative;
+    background-image: url('/static/images/background.png'); /* Ensure correct path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--primary-text); /* White Text */
     padding: 20px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Horizontally center content */
+    justify-content: center; /* Vertically center content */
+    min-height: 100vh; /* Ensure full viewport height */
+}
+
+/* Dark Overlay for Better Readability */
+body::before {
+    content: "";
+    position: fixed; /* Cover entire viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 0, 0, 0.4) 50%, rgba(0, 0, 139, 0.4) 50%);
+    z-index: -1; /* Place behind content */
+}
+
+/* Headers */
+h1, h3 {
+    text-align: center;
+    color: var(--primary-text); /* White */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Optional Shadow */
 }
 
 h1 {
-    text-align: center;
-    color: #4CAF50; /* Green color for the title */
+    margin-bottom: 20px;
 }
 
-/* Flash messages styling */
+h3 {
+    margin-top: 20px;
+}
+
+/* Flash Messages Styling */
 .flashes {
     list-style-type: none;
     padding: 0;
     margin: 20px auto;
     max-width: 450px;
+    width: 100%;
 }
 
 .flashes li {
-    background-color: #f8d7da;
-    color: #721c24;
+    background-color: var(--flash-background); /* Semi-transparent Red */
+    color: #FFFFFF; /* White Text */
     padding: 10px;
-    border: 1px solid #f5c6cb;
+    border: 1px solid #FF0000; /* Solid Red Border */
     border-radius: 4px;
     margin-bottom: 10px;
     text-align: center;
 }
 
-/* Form styles */
+/* Form Styles */
 form {
-    background-color: #fff;
+    background-color: var(--content-background); /* Semi-transparent Black */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Enhanced Shadow */
     max-width: 400px;
-    margin: 0 auto;
+    width: 100%; /* Responsive width */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
 }
 
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Form Group with Flexbox for Alignment */
 .form-group {
-    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .form-group label {
-    display: block;
     font-size: 1rem;
-    margin-bottom: 5px;
+    margin-right: 10px;
+    color: var(--secondary-text); /* Light Gray */
+    flex: 1;
 }
 
 .form-group input[type="number"],
 .form-group input[type="text"] {
-    padding: 8px;
-    width: 100%;
+    padding: 10px;
     font-size: 1rem;
-    border: 1px solid #ddd;
+    border: none; /* Removed Borders */
     border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent Black */
+    color: #FFFFFF; /* White Text */
+    flex: 2;
 }
 
+/* Checkbox Group */
 .checkbox-group {
     display: flex;
     align-items: center;
@@ -68,159 +151,111 @@ form {
 .checkbox-group span {
     flex: 1;
     font-size: 1rem;
+    color: var(--secondary-text); /* Light Gray */
 }
 
 .checkbox-group input[type="checkbox"] {
     width: 20px;
     height: 20px;
+    accent-color: var(--accent-color); /* Gold Accent */
 }
 
-label {
-    font-size: 1rem;
-    margin-bottom: 8px;
-    display: block;
-}
-
-input[type="number"], input[type="checkbox"], button {
-    margin-bottom: 15px;
-}
-
-input[type="number"], button {
-    padding: 8px;
-    width: 100%;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-input[type="checkbox"] {
-    margin-right: 8px;
-}
-
+/* Button Styles */
 button {
-    background-color: #4CAF50; /* Green color for button */
-    color: white;
+    background-color: var(--accent-color); /* Gold */
+    color: #000000; /* Black Text */ /* Updated Text Color */
     border: none;
     cursor: pointer;
     font-size: 1rem;
     border-radius: 4px;
-    padding: 10px;
+    padding: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: var(--button-hover); /* Darker Gold */
+    transform: scale(1.05); /* Slightly Enlarge */
 }
 
-/* Styling for the table displaying passwords */
-h3 {
-    color: #333;
-    text-align: center;
+button:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
+/* Buttons Container */
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 1s forwards 0.5s; /* Delayed Fade-In */
+}
+
+/* Table Styling */
 table {
     width: 80%;
     margin: 20px auto;
     border-collapse: collapse;
     table-layout: fixed;
-    max-width: 600px; /* Set a max-width for the table */
-    background-color: white; /* Set the background color of the table to white */
-    border-radius: 8px; /* Rounded edges for the table */
-    overflow: hidden; /* Ensures the rounded corners work properly */
+    max-width: 600px;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent Black */
+    border-radius: 8px;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 1s forwards 1s; /* Delayed Fade-In */
 }
 
 th, td {
     padding: 12px;
     text-align: left;
-    border: 1px solid #ddd;
+    border: none; /* Removed Borders */
 }
 
 th {
-    background-color: #4CAF50; /* Green color for table headers */
-    color: white;
+    background-color: var(--table-header); /* Gold */
+    color: #000000; /* Black Text */ /* Updated Text Color */
 }
 
-td {
-    font-size: 1.1rem;
-    color: #333; /* Default color for password text */
+td.password-cell {
+    color: var(--secondary-text); /* Light Gray Text */
 }
 
-/* Column widths */
 th:nth-child(1), td:nth-child(1) {
-    width: 10%; /* Smaller width for the "Number" column */
-    text-align: center; /* Center the text in the Number column */
+    width: 10%;
+    text-align: center;
 }
 
 th:nth-child(2), td:nth-child(2) {
-    width: 90%; /* Larger width for the "Password" column */
+    width: 90%;
 }
 
-/* Ensures the table rows have a white background */
-table tr {
-    background-color: white;
+/* Hover Effect for Table Rows */
+table tr:hover td {
+    background-color: rgba(255, 215, 0, 0.2); /* Light Gold Overlay on Hover */
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+/* Responsive Design */
+@media (max-width: 768px) {
+    form, table {
+        width: 90%;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
 }
 
-li {
-    font-size: 1.2rem;
-    color: #4CAF50;
-    text-align: center;
-}
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
 
-/* Style for the buttons container */
-.buttons {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;  /* Center the buttons */
-}
-
-/* Style for each button */
-#generateV1Btn, #generateV2Btn {
-    background-color: #4CAF50;  /* Green color */
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 0.9rem;  /* Smaller font size */
-    border-radius: 5px;  /* Slightly rounded corners */
-    padding: 6px 10px;  /* Smaller padding for a more compact button */
-    font-weight: bold;  /* Make the text bold */
-    text-transform: uppercase;  /* Make the text uppercase */
-    transition: background-color 0.3s ease;
-    width: auto;  /* Allow the button to adjust width based on content */
-}
-
-/* Hover effect for the buttons */
-#generateV1Btn:hover, #generateV2Btn:hover {
-    background-color: #45a049;  /* Slightly darker green */
-}
-
-/* Additional table styling for the layout consistency */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-table th, table td {
-    padding: 12px;
-    text-align: center;
-}
-
-table th {
-    background-color: #4CAF50; /* Green header */
-    color: white;
-}
-
-table td {
-    background-color: white;
-}
-
-table tr:nth-child(even) td {
-    background-color: #f2f2f2;
+    button {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
 }

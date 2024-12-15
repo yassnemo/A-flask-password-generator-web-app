@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Generator</title>
+    <!-- Link to Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Link to CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -23,35 +26,34 @@
     <form method="POST">
         <div class="form-group">
             <label for="length">Password Length:</label>
-            <input type="number" id="length" name="length" value="12" min="4" required>
+            <input type="number" id="length" name="length" value="12" min="4" required placeholder="Enter password length" aria-label="Password Length">
         </div>
 
         <div class="form-group">
             <label for="num_passwords">Number of Passwords:</label>
-            <input type="number" id="num_passwords" name="num_passwords" value="5" min="1" required>
+            <input type="number" id="num_passwords" name="num_passwords" value="5" min="1" required placeholder="Enter number of passwords" aria-label="Number of Passwords">
         </div>
 
         <div class="form-group checkbox-group">
             <span>Include Uppercase Letters:</span>
-            <input type="checkbox" id="uppercase" name="uppercase">
+            <input type="checkbox" id="uppercase" name="uppercase" aria-label="Include Uppercase Letters">
         </div>
 
         <div class="form-group checkbox-group">
             <span>Include Digits:</span>
-            <input type="checkbox" id="digits" name="digits">
+            <input type="checkbox" id="digits" name="digits" aria-label="Include Digits">
         </div>
 
         <div class="form-group checkbox-group">
             <span>Include Special Characters:</span>
-            <input type="checkbox" id="special_chars" name="special_chars">
+            <input type="checkbox" id="special_chars" name="special_chars" aria-label="Include Special Characters">
         </div>
-
     </form>
 
-    <!-- New Buttons -->
+    <!-- Buttons -->
     <div class="buttons">
-        <button id="generateV1Btn">Pass(V1)</button>
-        <button id="generateV2Btn">Pass(V2)</button>
+        <button id="generateV1Btn" aria-label="Generate Passwords Version 1">Generate Passwords (V1)</button>
+        <button id="generateV2Btn" aria-label="Generate Passwords Version 2">Generate Passwords (V2)</button>
     </div>
     
     {% if passwords %}
@@ -67,7 +69,7 @@
                 {% for password in passwords %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td class="password-cell">{{ password }}</td>  <!-- Add the password-cell class here -->
+                        <td class="password-cell">{{ password }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -75,32 +77,38 @@
     {% endif %}
 
     <script>
-        // When the "Generate Pass(V1)" button is clicked
-        document.getElementById("generateV1Btn").addEventListener("click", function() {
-            generatePasswords('V1');
+        // Prevent form submission on button click
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                generatePasswords(this.id);
+            });
         });
 
-        // When the "Generate Pass(V2)" button is clicked
-        document.getElementById("generateV2Btn").addEventListener("click", function() {
-            generatePasswords('V2');
-        });
-
-        // General function to generate passwords based on version
-        function generatePasswords(version) {
+        // Function to generate passwords
+        function generatePasswords(buttonId) {
             const length = document.getElementById("length").value;
             const numPasswords = document.getElementById("num_passwords").value;
             const useUppercase = document.getElementById("uppercase").checked;
             const useDigits = document.getElementById("digits").checked;
             const useSpecialChars = document.getElementById("special_chars").checked;
 
-            // AJAX request to generate new passwords
+            // Determine version based on button ID (if applicable)
+            let version = 'V1';
+            if (buttonId === 'generateV2Btn') {
+                version = 'V2';
+            }
+
+            // Prepare form data
             const formData = new FormData();
             formData.append("length", length);
             formData.append("num_passwords", numPasswords);
             formData.append("uppercase", useUppercase);
             formData.append("digits", useDigits);
             formData.append("special_chars", useSpecialChars);
+            formData.append("version", version); // Optional: If backend handles versions differently
 
+            // Fetch request to generate passwords
             fetch("/generate_passwords", {
                 method: "POST",
                 body: formData
@@ -108,11 +116,10 @@
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    alert(data.error);  // Show error if any
+                    alert(data.error);
                 } else {
-                    // Clear existing passwords and append new ones
                     const tableBody = document.querySelector("table tbody");
-                    tableBody.innerHTML = "";  // Clear existing rows
+                    tableBody.innerHTML = ""; // Clear existing passwords
 
                     data.passwords.forEach((password, index) => {
                         const row = document.createElement("tr");
@@ -123,7 +130,7 @@
 
                         const passwordCell = document.createElement("td");
                         passwordCell.textContent = password;
-                        passwordCell.classList.add('password-cell'); // Add the password-cell class here
+                        passwordCell.classList.add('password-cell');
                         row.appendChild(passwordCell);
 
                         tableBody.appendChild(row);
